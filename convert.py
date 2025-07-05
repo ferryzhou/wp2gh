@@ -1,5 +1,4 @@
 import os
-from markdownify import markdownify as md
 
 def posts_to_markdown(posts):
     files = []
@@ -8,14 +7,12 @@ def posts_to_markdown(posts):
         slug = post.get('slug', 'untitled')
         date = post.get('date', '')[:10]
         content = post.get('content', {}).get('rendered', '')
-        # Preserve all whitespaces in content
-        md_content = md(content, strip=[''], convert_whitespace=True)
         md_file = f"""---
 title: "{title}"
 date: {date}
 ---
 
-{md_content}
+{content}
 """
         files.append((f"{date}-{slug}.md", md_file))
     return files
