@@ -1,16 +1,4 @@
-from langdetect import detect
 from datetime import datetime
-
-def only_english(posts):
-    english_posts = []
-    for post in posts:
-        try:
-            lang = detect(post.get('content', {}).get('rendered', ''))
-            if lang == 'en':
-                english_posts.append(post)
-        except Exception:
-            continue
-    return english_posts
 
 def by_date_range(posts, start=None, end=None):
     def in_range(post):

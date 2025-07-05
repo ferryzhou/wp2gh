@@ -25,8 +25,7 @@ def main():
 
     if args.start_date or args.end_date:
         posts = filter.by_date_range(posts, start=args.start_date, end=args.end_date)
-    english_posts = filter.only_english(posts)
-    markdown_files = convert.posts_to_markdown(english_posts)
+    markdown_files = convert.posts_to_markdown(posts)
 
     if not args.repo:
         # Write to local output directory if no repo is specified
