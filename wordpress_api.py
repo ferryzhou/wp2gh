@@ -1,29 +1,4 @@
-import requests
 import xml.etree.ElementTree as ET
-
-def fetch_posts(site_url="https://your-wordpress-site.com", per_page=100, xml_file=None):
-    if xml_file:
-        return fetch_posts_from_xml(xml_file)
-    url = f"{site_url}/wp-json/wp/v2/posts"
-    posts = []
-    page = 1
-    while True:
-        resp = requests.get(url, params={"per_page": per_page, "page": page})
-        if resp.status_code != 200:
-            print(f"Error: Status code {resp.status_code}")
-            print(resp.text)
-            return []
-        try:
-            data = resp.json()
-        except Exception as e:
-            print("Failed to parse JSON response:")
-            print(resp.text)
-            raise
-        if not data:
-            break
-        posts.extend(data)
-        page += 1
-    return posts
 
 def fetch_posts_from_xml(xml_file):
     tree = ET.parse(xml_file)

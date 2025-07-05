@@ -1,6 +1,5 @@
 import argparse
 import wordpress_api
-import filter
 import convert
 import subprocess
 import os
@@ -8,23 +7,11 @@ import tempfile
 
 def main():
     parser = argparse.ArgumentParser(description="Copy WordPress posts to GitHub Pages blog.")
-    parser.add_argument('--site', help='Source WordPress site URL (e.g., https://example.com)')
-    parser.add_argument('--xml', help='Path to local WordPress exported XML file')
-    parser.add_argument('--start-date', help='Start date (YYYY-MM-DD)', default=None)
-    parser.add_argument('--end-date', help='End date (YYYY-MM-DD)', default=None)
+    parser.add_argument('--xml', required=True, help='Path to local WordPress exported XML file')
     parser.add_argument('--repo', help='Destination GitHub Pages repository URL (e.g., https://github.com/user/repo.git)')
     args = parser.parse_args()
 
-    if not args.site and not args.xml:
-        parser.error('You must specify either --site or --xml.')
-
-    if args.xml:
-        posts = wordpress_api.fetch_posts_from_xml(xml_file=args.xml)
-    else:
-        posts = wordpress_api.fetch_posts(site_url=args.site)
-
-    if args.start_date or args.end_date:
-        posts = filter.by_date_range(posts, start=args.start_date, end=args.end_date)
+    posts = wordpress_api.fetch_posts_from_xml(xml_file=args.xml)
     markdown_files = convert.posts_to_markdown(posts)
 
     if not args.repo:
