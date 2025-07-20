@@ -24,3 +24,6 @@ Then run the following command to extract the content and push to github pages.
 python main.py --xml=/path/to/your/wordpress-export.xml --repo=https://github.com/username/repo.git
 ```
 
+It will create a local change on branch 'add-wordpress-posts' and push to your repo.
+
+Go your github repo webpage, you will see the branch updates. Follow the link,  create a pull request on GitHub and merge.
